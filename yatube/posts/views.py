@@ -27,3 +27,24 @@ def group_posts(request, slug):
         'posts': posts,
     }
     return render(request, template, context)
+
+
+def profile(request, username):
+    post_list = Post.objects.filter(author=username)
+    paginator = Paginator(post_list, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    template = 'posts/profile.html'
+    context = {
+        'page_obj': page_obj,
+    }
+    return render(request, template, context)
+
+
+def post_detail(request, post_id):
+    post_detail = Post.objects.filter(id=post_id)
+    template = 'posts/post_detail.html'
+    context = {
+        'post_detail': post_detail,
+    }
+    return render(request, template, context)
