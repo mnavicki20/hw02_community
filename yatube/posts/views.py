@@ -1,7 +1,9 @@
 from django.shortcuts import get_object_or_404, render
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
+from django.views.generic.edit import CreateView
 
+from .forms import PostForm
 from .models import Group, Post, User
 
 
@@ -61,3 +63,9 @@ def post_detail(request, post_id):
         'count': count,
     }
     return render(request, template, context)
+
+
+class PostView(CreateView):
+    form_class = PostForm
+    template_name = 'posts/create_post.html'
+    success_url = '/profile/<username>/'
