@@ -20,11 +20,15 @@ def index(request):
 
 def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
-    posts = group.posts.all()[:10]
+    posts = Post.objects.all()
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     template = 'posts/group_list.html'
     context = {
         'group': group,
         'posts': posts,
+        'page_obj': page_obj,
     }
     return render(request, template, context)
 
@@ -32,7 +36,7 @@ def group_posts(request, slug):
 def profile(request, username):
     user = get_object_or_404(User, username=username)
     post_list = Post.objects.filter(author=user).all()
-    count_user_posts = Post.objects.filter(author=user).all().count()
+    count_user_posts = post_list.count()
     paginator = Paginator(post_list, 10)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)

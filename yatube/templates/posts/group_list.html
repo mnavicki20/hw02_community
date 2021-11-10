@@ -15,9 +15,10 @@
           <li>Дата публикации: {{ post.pub_date|date:"d E Y" }}</li>
         </ul>
         <p>{{ post.text }}</p>
-        <hr>
-      {% endif %}  
-    {% endfor %} 
+        {% if not forloop.last %}<hr>{% endif %}
+      {% endif %}
+    {% endfor %}
+    {% include 'posts/includes/paginator.html' %}
   <div>
 </main>
 {% endblock %}
