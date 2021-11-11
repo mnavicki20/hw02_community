@@ -15,6 +15,7 @@
           <li>Дата публикации: {{ post.pub_date|date:"d E Y" }}</li>
         </ul>
         <p>{{ post.text }}</p>
+        <a href="{% url "posts:post_detail" post.id %}">подробная информация</a>
         {% if not forloop.last %}<hr>{% endif %}
       {% endif %}
     {% endfor %}

@@ -38,6 +38,7 @@
             <p>
               {{ post.text }}
             </p>
+            <a href="{% url "posts:post_edit" post.id %}">Редактировать пост</a>
           </article>
         </div>
       </div>
