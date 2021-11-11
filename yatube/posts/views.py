@@ -1,7 +1,6 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
-from django.views.generic.edit import CreateView
 
 from .forms import PostForm
 from .models import Group, Post, User
@@ -65,7 +64,17 @@ def post_detail(request, post_id):
     return render(request, template, context)
 
 
-class PostView(CreateView):
-    form_class = PostForm
-    template_name = 'posts/create_post.html'
-    success_url = '/profile/<username>/'
+@login_required
+def post_create(request):
+    template = 'posts/create_post.html'
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.author = request.user
+            form.save()
+            return redirect('posts:profile', post.author)
+        return render(request, template, {'form': form})
+    form = PostForm()
+    title = 'Добавить запись'
+    return render(request, template, {'form': form, 'title': title})
