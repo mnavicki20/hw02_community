@@ -14,7 +14,13 @@
       <div class="row justify-content-center">
         <div class="col-md-8 p-5">
           <div class="card">
-            <div class="card-header">Новый пост</div>
+            <div class="card-header">
+              {% if is_edit %}
+                Редактировать пост
+              {% else %}
+                Новый пост
+              {% endif %}
+            </div>
             <div class="card-body">
               <form method="post">
                 {% csrf_token %}
@@ -24,7 +30,13 @@
                     <span class="required text-danger" >*</span>
                   </label>
                   <textarea name="text" cols="40" rows="10" class="form-control" required id={{ form.text }}</textarea>
-                  <small id="id_text-help" class="form-text text-muted">Текст нового поста</small>
+                  <small id="id_text-help" class="form-text text-muted">
+                    {% if is_edit %}
+                      Текст редактируемого поста
+                    {% else %}
+                      Текст нового поста
+                    {% endif %}
+                  </small>
                 </div>
                 <div class="form-group row my-3 p-3">
                   <label for="id_group">Group</label>
