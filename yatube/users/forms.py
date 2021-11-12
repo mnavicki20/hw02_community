@@ -1,10 +1,8 @@
-from django.contrib.auth import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import get_user_model
 from django import forms
+from django.contrib.auth import forms, get_user_model
+from django.contrib.auth.forms import UserCreationForm
 
 from .models import Contact
-
 
 User = get_user_model()
 
