@@ -93,8 +93,10 @@ def post_edit(request, post_id):
             return redirect('posts:profile', post.author)
         return render(request, 'posts/create_post.html', {'form': form})
 
+    is_edit = True
     template = 'posts/create_post.html'
     context = {
         'form': form,
+        'is_edit': is_edit,
     }
     return render(request, template, context)
