@@ -7,11 +7,18 @@
 {% block content %}
 <main>
   <div class="container">
-    <p><h1>{{ group.title }}</h1></p>
+    <h1>Записи сообщества: {{ group.title }}</h1>
+    {% if group.description %}
+      <p>{{ group.description }}</p>
+    {% endif %}
     {% for post in posts %}
       {% if post.group.slug in group.slug %}
         <ul>
-          <li>Автор: {{ post.author.get_full_name }}</li>
+          <li>Автор: {{ post.author.get_full_name }}
+            <a href="{% url "posts:profile" post.author %}">
+              все посты пользователя
+            </a>
+          </li>
           <li>Дата публикации: {{ post.pub_date|date:"d E Y" }}</li>
         </ul>
         <p>{{ post.text }}</p>
